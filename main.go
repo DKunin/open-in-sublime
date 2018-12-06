@@ -3,11 +3,10 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/getlantern/systray"
 	"os"
 	"os/exec"
 
-	//"github.com/getlantern/systray"
-	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -25,20 +24,21 @@ func openHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-	io.WriteString(w, "ok")
 }
 
 func main() {
-	//systray.Run(onReady, onExit)
+	systray.Run(onReady, onExit)
 	http.HandleFunc("/open", openHandler)
 	log.Fatal(http.ListenAndServe(*addr, nil))
 
 }
 
 func onReady() {
-	//systray.SetIcon(getIcon("assets/code.ico"))
+	systray.SetIcon(getIcon("assets/icon.ico"))
 	//systray.SetTitle("I'm alive!")
 	//systray.SetTooltip("Look at me, I'm a tooltip!")
+	mQuit := systray.AddMenuItem("Quit", "Quit the whole app")
+	mQuit.SetIcon(getIcon("assets/code.ico"))
 }
 
 func onExit() {
