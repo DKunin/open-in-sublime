@@ -6,6 +6,7 @@ import (
 	"github.com/getlantern/systray"
 	"os"
 	"os/exec"
+	"runtime"
 
 	"io/ioutil"
 	"log"
@@ -19,7 +20,6 @@ var (
 func openHandler(w http.ResponseWriter, r *http.Request) {
 	filename, _ := r.URL.Query()["filename"]
 	row, _ := r.URL.Query()["row"]
-
 	if err := exec.Command("/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl", string(filename[0]) + ":" + string(row[0])).Run(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
@@ -27,10 +27,15 @@ func openHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	systray.Run(onReady, onExit)
+	runtime.GOMAXPROCS(2)
+	//go startTray()
 	http.HandleFunc("/open", openHandler)
 	log.Fatal(http.ListenAndServe(*addr, nil))
 
+}
+
+func startTray() {
+	defer systray.Run(onReady, onExit)
 }
 
 func onReady() {
