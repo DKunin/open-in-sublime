@@ -9,10 +9,6 @@
 
     <form action="/settings">
         <label for="">
-            Port:
-            <input type="text" value="" name="port" />
-        </label>
-        <label for="">
             Editor
             <select name="editor">
                 <option value="sublime">Sublime</option>
@@ -25,7 +21,7 @@
 
     <script>
         const form = document.querySelector('form');
-        const port = document.querySelector('[name="port"]');
+        // const port = document.querySelector('[name="port"]');
         const editor = document.querySelector('[name="editor"]');
 
 
@@ -34,23 +30,21 @@
                     {"credentials":"omit","headers":{
                             "accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
                             "content-type":"application/x-www-form-urlencoded","upgrade-insecure-requests":"1"},"method":"POST","mode":"cors"}).then(res => res.json());
-            port.value = settings.port;
+            // port.value = settings.port;
             editor.value = settings.editor;
 
         })()
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const port = e.target.elements.port.value;
+            // const port = e.target.elements.port.value;
             const editor = e.target.elements.editor.value;
 
             await fetch("/settings",
                     {"credentials":"omit","headers":{
                             "accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
                             "content-type":"application/x-www-form-urlencoded","upgrade-insecure-requests":"1"},
-                        "body":`port=${port}&editor=${editor}`,"method":"POST","mode":"cors"});
-            // const json = fetch("/s")
-            // window.location.reload()
+                        "body":`editor=${editor}`,"method":"POST","mode":"cors"});
         });
 
     </script>
