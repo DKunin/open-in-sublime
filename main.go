@@ -4,10 +4,10 @@ import (
 	"github.com/dkunin/open-in-sublime/server"
 	config "github.com/dkunin/open-in-sublime/settings"
 	"github.com/dkunin/open-in-sublime/tray"
-	"github.com/getlantern/systray"
 	"log"
 	"net/http"
 	"runtime"
+	"github.com/getlantern/systray"
 )
 
 
