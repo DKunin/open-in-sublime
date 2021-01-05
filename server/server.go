@@ -3,7 +3,6 @@ package server
 import (
 	"fmt"
 	config "github.com/dkunin/open-in-sublime/settings"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -52,33 +51,33 @@ func SettingsJsonHandler(settings *config.Settings) func(w http.ResponseWriter, 
 	}
 }
 
-func SettingsHandler(settings *config.Settings) func(w http.ResponseWriter, r *http.Request) {
-	return func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == "POST" {
-			err := r.ParseForm()
-			if err != nil {
-				w.WriteHeader(500)
-				log.Printf("error with form %s", err)
-				return
-			}
-
-			settings.SetEditor(r.PostFormValue("editor"))
-			//settings.SetPort(r.PostFormValue("port"))
-
-			w.WriteHeader(200)
-			w.Write([]byte(settings.GetSettings()))
-			return
-		}
-
-		b, err := ioutil.ReadFile("assets/settings.html")
-
-		if err != nil {
-			w.WriteHeader(500)
-			w.Write([]byte("Error reading file"))
-			log.Fatal(err)
-			return
-		}
-		w.WriteHeader(200)
-		w.Write([]byte(b))
-	}
-}
+//func SettingsHandler(settings *config.Settings) func(w http.ResponseWriter, r *http.Request) {
+//	return func(w http.ResponseWriter, r *http.Request) {
+//		if r.Method == "POST" {
+//			err := r.ParseForm()
+//			if err != nil {
+//				w.WriteHeader(500)
+//				log.Printf("error with form %s", err)
+//				return
+//			}
+//
+//			settings.SetEditor(r.PostFormValue("editor"))
+//			//settings.SetPort(r.PostFormValue("port"))
+//
+//			w.WriteHeader(200)
+//			w.Write([]byte(settings.GetSettings()))
+//			return
+//		}
+//
+//		b, err := ioutil.ReadFile("assets/settings.html")
+//
+//		if err != nil {
+//			w.WriteHeader(500)
+//			w.Write([]byte("Error reading file"))
+//			log.Fatal(err)
+//			return
+//		}
+//		w.WriteHeader(200)
+//		w.Write([]byte(b))
+//	}
+//}
